@@ -1,59 +1,54 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>adam zhou</title>
+        <title>AdamZhou</title>
         <style>
-            body { margin: 0; }
-            canvas { display: block; }
+            body { margin: 0;}
+            canvas {display: block;}
         </style>
+        <script src="three.js"></script>
+        <script src="orbit.js"></script>
     </head>
 
     <body>
-        <div id="splashContent" style="background-color: rgb(0, 0, 255);">
-        <script src="three.js"></script>
-        <script src="orbit.js"></script>
-        <script>
-            var scene = new THREE.Scene();
+            <script>
+                var scene = new THREE.Scene();
 
-            var camera = new THREE.PerspectiveCamera(45, window.innerWidth/ window.innerHeight, 0.01, 1000);
-            camera.position.set(0.0, 0, 1.5);
-            
+                var camera = new THREE.PerspectiveCamera(45, window.innerWidth/ window.innerHeight, 0.01, 1000);
+                camera.position.set(0, 1.5, 1.5);
+                
 
-            var renderer = new THREE.WebGLRenderer();
-            renderer.setSize( window.innerWidth, window.innerHeight );
+                var renderer = new THREE.WebGLRenderer();
+                renderer.setSize( window.innerWidth, window.innerHeight );
 
-            //renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
-            document.body.appendChild( renderer.domElement );
-            var controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.update();
-
-            // controls.autoRotate = true;
-            // controls.autoRotateSpeed = -1.0;
-            // controls.enablePan = false;
-            // controls.enableZoom = false;
-
-            var ambient = new THREE.AmbientLight(0xffffff, 1);
-            scene.add(ambient);
-
-            var texture = new THREE.TextureLoader().load('image/light_dim_4096.jpg');
-            //texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-
-            var earth = new THREE.Mesh(
-                new THREE.SphereBufferGeometry(0.5, 32.0, 32.0),
-                new THREE.MeshPhongMaterial({map: texture})
-            )
-            scene.add(earth)
-
-            function animate() {
-                requestAnimationFrame( animate );
-                earth.rotation.y += 0.002;
+                //renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+                document.body.appendChild( renderer.domElement );
+                var controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.update();
-                renderer.render( scene, camera );
-            }
-            animate();
 
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = -2.0;
+                controls.enablePan = false;
+                controls.enableZoom = false;
 
-        </script>
-        </div>
+                var ambient = new THREE.AmbientLight(0xffffff, 1);
+                scene.add(ambient);
+
+                var texture = new THREE.TextureLoader().load('image/light_dim_4096.jpg');
+                //texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+                var earth = new THREE.Mesh(
+                    new THREE.SphereBufferGeometry(1, 32.0, 32.0),
+                    new THREE.MeshPhongMaterial({map: texture})
+                )
+                scene.add(earth)
+
+                function animate() {
+                    requestAnimationFrame( animate );
+                    controls.update();
+                    renderer.render( scene, camera );
+                }
+                animate();
+            </script>
     </body>
 </html>
